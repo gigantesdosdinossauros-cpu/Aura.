@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Auxílio Vizionarios</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;min-height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+:root{--purple:#8a2be2;--purple2:#6f19bd}
+
+.login{
+ width:min(360px,90vw);padding:32px 28px 30px;text-align:center;
+ background:#090909;border:2px solid var(--purple);border-radius:18px;
+ box-shadow:0 0 14px var(--purple),0 0 35px rgba(138,43,226,.45);
+}
+.avatar{
+ width:82px;height:82px;margin:0 auto 24px;border:3px solid var(--purple);
+ border-radius:50%;display:grid;place-items:center;font-size:46px;font-weight:700;color:var(--purple);
+}
+.login input{
+ width:100%;height:54px;padding:0 16px;border:2px solid var(--purple);
+ border-radius:12px;background:#151515;color:#fff;font-size:18px;outline:none;text-align:center;
+}
+.login input::placeholder{color:#aaa}
+.enter{
+ width:100%;height:54px;margin-top:18px;border:2px solid #fff;border-radius:12px;
+ background:#fff;color:#000;font-size:19px;font-weight:700;
+}
+.shake{animation:shake .42s ease}
+@keyframes shake{
+ 0%,100%{transform:translateX(0)}
+ 20%{transform:translateX(-16px)}
+ 40%{transform:translateX(14px)}
+ 60%{transform:translateX(-11px)}
+ 80%{transform:translateX(8px)}
+}
+
+.app{
+ display:none;width:min(720px,92vw);background:#090909;border:2px solid var(--purple);
+ border-radius:28px;padding:30px 30px 34px;
+ box-shadow:0 0 12px var(--purple),0 0 35px rgba(138,43,226,.45);
+}
+h1{text-align:center;margin:0 0 28px;font-size:clamp(32px,5vw,48px)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.tab{height:58px;border:2px solid var(--purple);border-radius:17px;background:#111;color:#fff;font-size:24px;font-weight:700}
+.tab.active{background:var(--purple);box-shadow:0 0 18px rgba(138,43,226,.7)}
+.feature{
+ width:100%;min-height:76px;margin-bottom:14px;padding:10px 14px;display:flex;align-items:center;
+ gap:16px;border:2px solid #292929;border-radius:15px;background:#151515;color:#fff;text-align:left;
+}
+.feature.active{border-color:var(--purple);box-shadow:0 0 12px rgba(138,43,226,.35)}
+.toggle{
+ width:48px;height:48px;flex:0 0 48px;border:2px solid var(--purple);border-radius:11px;
+ display:grid;place-items:center;font-size:28px;font-weight:700;color:var(--purple);background:#111
+}
+.feature.active .toggle{background:var(--purple);color:#fff}
+.feature span:last-child{font-size:22px}
+.precision-label{font-size:21px;margin:18px 0 4px}
+input[type=range]{width:100%;accent-color:var(--purple);height:24px}
+select{
+ width:100%;height:58px;margin-top:10px;padding:0 16px;color:#fff;background:#151515;
+ border:2px solid var(--purple);border-radius:15px;font-size:20px;outline:none
+}
+.inject{
+ width:100%;height:70px;margin-top:26px;border:0;border-radius:16px;background:var(--purple);
+ color:#fff;font-size:21px;font-weight:700;box-shadow:0 0 20px rgba(138,43,226,.65)
+}
+.info{display:none}
+.info-card{background:#151515;border:2px solid #292929;border-radius:15px;padding:20px;margin-bottom:14px;font-size:19px;line-height:1.4}
+@media(max-width:600px){
+ .app{padding:24px 18px 28px;border-radius:24px}
+ h1{font-size:32px;margin-bottom:24px}
+ .tab{height:54px;font-size:20px}
+ .feature{min-height:70px}
+ .feature span:last-child{font-size:19px}
+ .toggle{width:44px;height:44px;flex-basis:44px;font-size:25px}
+ .inject{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="avatar">B</div>
+  <input id="key" type="text" autocomplete="off" placeholder="Chave de acesso">
+  <button class="enter" id="enter">ENTRAR</button>
+</div>
+
+<main class="app" id="app">
+  <h1>AUXÍLIO VIZIONARIOS</h1>
+  <div class="tabs">
+    <button class="tab active" id="functionsTab">Funções</button>
+    <button class="tab" id="infoTab">Info</button>
+  </div>
+
+  <section id="functions">
+    <button class="feature"><span class="toggle">&lt;</span><span>Máximo de Precisão</span></button>
+    <button class="feature"><span class="toggle">&lt;</span><span>Norecoil</span></button>
+    <button class="feature"><span class="toggle">&lt;</span><span>Melhor Mira</span></button>
+
+    <div class="precision-label">Precisão: <span id="precisionValue">0</span></div>
+    <input id="precision" type="range" min="0" max="10" value="0">
+
+    <select id="assistType">
+      <option>Auxílio Cabeça</option>
+      <option>Auxílio Corpo</option>
+      <option>Auxílio Padrão</option>
+    </select>
+
+    <button class="inject" id="openGame">INJETAR FUNÇÕES NO JOGO</button>
+  </section>
+
+  <section class="info" id="info">
+    <div class="info-card">Este painel é uma interface visual de auxílio e configuração.</div>
+    <div class="info-card">As opções marcadas ficam destacadas com contorno roxo.</div>
+    <div class="info-card">DESENVOLVIDO POR VIZIONARIOS.</div>
+  </section>
+</main>
+
+<script>
+const login=document.getElementById('login');
+const key=document.getElementById('key');
+const enter=document.getElementById('enter');
+const app=document.getElementById('app');
+
+function invalid(){
+ login.classList.remove('shake');
+ void login.offsetWidth;
+ login.classList.add('shake');
+ key.value='';
+ setTimeout(()=>login.classList.remove('shake'),450);
+}
+
+enter.onclick=()=>{
+ if(key.value.trim()==='bernardo.ffz'){
+   login.style.display='none';
+   app.style.display='block';
+ }else invalid();
+};
+key.addEventListener('keydown',e=>{if(e.key==='Enter')enter.click()});
+
+document.querySelectorAll('.feature').forEach(btn=>{
+ btn.addEventListener('click',()=>btn.classList.toggle('active'));
+});
+
+const precision=document.getElementById('precision');
+const precisionValue=document.getElementById('precisionValue');
+precision.addEventListener('input',()=>precisionValue.textContent=precision.value);
+
+const functionsTab=document.getElementById('functionsTab');
+const infoTab=document.getElementById('infoTab');
+const functions=document.getElementById('functions');
+const info=document.getElementById('info');
+
+functionsTab.onclick=()=>{
+ functionsTab.classList.add('active');infoTab.classList.remove('active');
+ functions.style.display='block';info.style.display='none';
+};
+infoTab.onclick=()=>{
+ infoTab.classList.add('active');functionsTab.classList.remove('active');
+ functions.style.display='none';info.style.display='block';
+};
+
+/*
+ Deep link somente: sem fallback para App Store.
+ O HTML não consegue verificar de forma confiável se o app está instalado
+ nem injetar código em outro aplicativo. Se o esquema não estiver registrado,
+ o sistema simplesmente não abrirá o jogo.
+*/
+document.getElementById('openGame').onclick=()=>{
+ window.location.href='freefiremax://';
+};
+</script>
+</body>
+</html>
